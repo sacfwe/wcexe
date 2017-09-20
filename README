@@ -1,0 +1,101 @@
+#include <iostream>
+#include <stdlib.h>
+#include <fstream>
+#include <string>
+using namespace std;
+
+
+int Linecount()
+{
+char filename[20];	
+int flag=0,n=0;
+FILE *fp;
+int m=0;
+char c;
+cout<<"输入文件名："<<endl;
+	cin>>filename;
+if((fp=fopen(filename,"r"))==NULL)
+{ printf("文件无法打开\n");
+  exit(0);
+}
+else
+{
+ while((c = fgetc(fp)) != EOF) //逐个读入字符直到文件结尾
+    {
+        if(c == '\n') n++; //统计行数。
+        m= c; //保存上一字符。
+    }
+    fclose(fp); //关闭文件
+    if(m!='\n') n++;//处理末行
+    return n;
+	}
+}
+
+
+
+int Wordcount()
+{
+char filename[20];	
+int m=0,n=0;
+FILE *fp;
+char c;
+cout<<"输入文件名："<<endl;
+	cin>>filename;
+if((fp=fopen(filename,"r"))==NULL)
+{ printf("文件无法打开\n");
+  exit(0);
+}
+while(feof(fp)==0)
+{  c=fgetc(fp);
+  if(c==' '||c=='\n') m=0;
+  else if(m==0)
+  {
+  m=1;n++;
+  }
+}
+return n;
+}
+int Charcount()
+{
+char filename[20];	
+int flag=0;
+FILE *fp;
+char c;
+int n =0;
+cout<<"输入文件名："<<endl;
+	cin>>filename;
+if((fp=fopen(filename,"r"))==NULL)
+{ printf("文件无法打开\n");
+  exit(0);
+}
+  while(fgetc(fp)!=EOF) 
+	  n++;
+  fclose(fp);
+  return n;
+}
+
+int main()
+{
+    while(1)
+    {
+		int wordcount=0,linecount=0,charcount=0;
+        char ch;
+        cout<<"输入用户命令：wc.exe |";
+        cin>>ch;
+        if(ch=='w')
+        {
+			wordcount=Wordcount();
+			cout<<"文件单词个数为："<<Wordcount()<<endl;
+		}
+		if(ch=='l')
+        {
+            linecount=Linecount();
+            cout<<"文件的行数为: "<<Linecount()<<endl;
+        }
+		if(ch=='c')
+		{
+			charcount=Charcount();
+			cout<<"文件的字符数为："<<Charcount()<<endl;
+		}
+	}
+}
